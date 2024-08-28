@@ -1,0 +1,36 @@
+---
+title: "api-practice"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(dataRetrieval)
+```
+
+```{r}
+#set parameters for the query
+
+siteNumber <- "01491000"
+parameterCd <- "00060" # Discharge
+startDate <- "2023-08-19"
+endDate <- "2023-08-22"
+```
+
+```{r}
+#query the API
+
+discharge <- readNWISdv(siteNumber, parameterCd, startDate, endDate)
+```
+
+```{r}
+discharge_plot <- ggplot(data = discharge, aes(x = Date, y = X_00060_00003)) +
+  geom_point() +
+  xlab("Date") +
+  ylab("Discharge Volume")
+
+discharge_plot
+
+max(discharge$X_00060_00003, na.rm = TRUE)
+```
